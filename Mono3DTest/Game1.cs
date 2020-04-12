@@ -53,10 +53,11 @@ namespace Test3D
             basicEffect = new BasicEffect(GraphicsDevice);
             basicEffect.Alpha = 1f;
             basicEffect.Texture = Content.Load<Texture2D>("ericbomb");
+            basicEffect.TextureEnabled = true;
 
             // Want to see the colors of the vertices, this needs to 
             //be on
-            //basicEffect.VertexColorEnabled = true;
+            basicEffect.VertexColorEnabled = true;
 
             //Lighting requires normal information which 
             //VertexPositionColor does not have
@@ -77,8 +78,7 @@ namespace Test3D
 
             //Vert buffer
             vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(
-                           VertexPositionColor), 4, BufferUsage.
-                           WriteOnly);
+                           VertexPositionColor), 4, BufferUsage.WriteOnly);
             vertexBuffer.SetData<VertexPositionColor>(triangleVertices);
         }
 
@@ -162,6 +162,11 @@ namespace Test3D
             {
                 pass.Apply();
                 GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, triangleVertices.Length-1);
+                /*graphics.GraphicsDevice.DrawUserPrimitives(
+                                    PrimitiveType.TriangleList,
+                            triangleVertices,
+                            0,
+                            2);*/
             }
 
             base.Draw(gameTime);
