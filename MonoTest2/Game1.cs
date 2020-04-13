@@ -33,6 +33,14 @@ namespace MonoGame3D
 
         protected override void Initialize()
         {
+            Texture2D originalTexture = Content.Load<Texture2D>("ericbomb");
+            Rectangle sourceRectangle = new Rectangle(0, 0, originalTexture.Width - 0, originalTexture.Height - 0);
+
+            checkerboardTexture = new Texture2D(GraphicsDevice, sourceRectangle.Width, sourceRectangle.Height);
+            Color[] data = new Color[sourceRectangle.Width * sourceRectangle.Height];
+            originalTexture.GetData(0, sourceRectangle, data, 0, data.Length);
+            checkerboardTexture.SetData(data);
+
             newSprite = this.CreateSprite(10, 10);
 
             floorVerts = new VertexPositionTexture[6];
@@ -105,8 +113,8 @@ namespace MonoGame3D
 
         protected override void LoadContent()
         {
-            checkerboardTexture = Content.Load<Texture2D>("ericbomb");
-            //checkerboardTexture.
+            //var tmp = Content.Load<Texture2D>("ericbomb");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -117,36 +125,25 @@ namespace MonoGame3D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend; // Need for transparent bits
-            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            //GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
-            //GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
 
             GraphicsDevice.Clear(Color.Red);
 
-            DrawGround();
-
-            base.Draw(gameTime);
-
-        }
-
-        void DrawGround()
-        {
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
-                //this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+                this.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
 
                 pass.Apply();
 
-                graphics.GraphicsDevice.DrawUserPrimitives(
-                    // We’ll be rendering two triangles
-                    PrimitiveType.TriangleList,
-                    // The array of verts that we want to render
-                    floorVerts,
-                    // The offset, which is 0 since we want to start 
-                    // at the beginning of the floorVerts array
-                    0,
-                    // The number of triangles to draw
-                    2);
+                graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, floorVerts, 0, 2);
+
+                base.Draw(gameTime);
+            }
+        }
+        /*
+        void DrawGround()
+        {
+
 
                 graphics.GraphicsDevice.DrawUserPrimitives(
                     // We’ll be rendering two triangles
@@ -160,7 +157,7 @@ namespace MonoGame3D
                     2);
             }
         }
-
+        */
     }
 }
 
