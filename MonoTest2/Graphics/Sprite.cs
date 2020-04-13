@@ -42,23 +42,19 @@ namespace MonoTest2.Graphics
             var cameraUpVector = Vector3.UnitY;
             effect.View = Matrix.CreateLookAt(game.cameraPosition, cameraLookAtVector, cameraUpVector);
 
-            verts = new VertexPositionTexture[6];
+            verts = new VertexPositionTexture[4];
 
             verts[0].Position = new Vector3(0, 0, 0);
             verts[1].Position = new Vector3(0, h, 0);
             verts[2].Position = new Vector3(w, 0, 0);
-            verts[3].Position = verts[1].Position;
-            verts[4].Position = new Vector3(w, h, 0);
-            verts[5].Position = verts[2].Position;
+            verts[3].Position = new Vector3(w, h, 0);
 
 
             //---
             verts[0].TextureCoordinate = new Vector2(0, 0);
             verts[1].TextureCoordinate = new Vector2(0, 1);
             verts[2].TextureCoordinate = new Vector2(1, 0);
-            verts[3].TextureCoordinate = verts[1].TextureCoordinate;
-            verts[4].TextureCoordinate = new Vector2(1, 1);
-            verts[5].TextureCoordinate = verts[2].TextureCoordinate;
+            verts[3].TextureCoordinate = new Vector2(1, 1);
         }
 
 
@@ -89,7 +85,7 @@ namespace MonoTest2.Graphics
             {
                 pass.Apply();
 
-                graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, verts, 0, 2);
+                graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, verts, 0, 2);
             }
 
         }
