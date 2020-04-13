@@ -36,8 +36,8 @@ namespace MonoGame3D
         {
             checkerboardTexture = Content.Load<Texture2D>("ericbomb");
 
-            newSprite1 = new Sprite(this, -40, -40, 20, 20, "junglesign");
-            newSprite2 = new Sprite(this, -60, -20, 40, 40, "lunarrover");
+            newSprite1 = new Sprite(this, -40, -40, 20, 20, "lunarrover");
+            newSprite2 = new Sprite(this, -60, -50, 20, 40, "junglesign");
 
             floorVerts = new VertexPositionTexture[6];
 

@@ -50,11 +50,23 @@ namespace MonoTest2.Graphics
             verts[3].Position = new Vector3(w, h, 0);
 
 
-            //---
-            verts[0].TextureCoordinate = new Vector2(0, 0);
+            //--- Sideways
+            /*verts[0].TextureCoordinate = new Vector2(0, 0);
+            verts[1].TextureCoordinate = new Vector2(1, 0);
+            verts[2].TextureCoordinate = new Vector2(0, 1);
+            verts[3].TextureCoordinate = new Vector2(1, 1);
+            */
+
+            // Upside down
+/*            verts[0].TextureCoordinate = new Vector2(0, 0);
             verts[1].TextureCoordinate = new Vector2(0, 1);
             verts[2].TextureCoordinate = new Vector2(1, 0);
             verts[3].TextureCoordinate = new Vector2(1, 1);
+            */
+            verts[0].TextureCoordinate = new Vector2(0, 1);
+            verts[1].TextureCoordinate = new Vector2(0, 0);
+            verts[2].TextureCoordinate = new Vector2(1, 1);
+            verts[3].TextureCoordinate = new Vector2(1, 0);
         }
 
 
