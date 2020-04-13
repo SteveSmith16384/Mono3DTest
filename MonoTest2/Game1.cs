@@ -18,8 +18,8 @@ namespace MonoGame3D
 
         Texture2D checkerboardTexture;
 
-        Vector3 cameraPosition = new Vector3(15, 10, 10);
-        //Vector3 cameraPosition = new Vector3(0, 40, 20);
+        //Vector3 cameraPosition = new Vector3(15, 10, 10);
+        Vector3 cameraPosition = new Vector3(0, 0, 100);
 
         public Game1()
         {
@@ -66,7 +66,7 @@ namespace MonoGame3D
             // The assignment of effect.View and effect.Projection
             // are nearly identical to the code in the Model drawing code.
             var cameraLookAtVector = Vector3.Zero;
-            var cameraUpVector = Vector3.UnitZ;
+            var cameraUpVector = Vector3.UnitY;
 
             effect.View = Matrix.CreateLookAt(cameraPosition, cameraLookAtVector, cameraUpVector);
 
@@ -76,6 +76,7 @@ namespace MonoGame3D
         protected override void LoadContent()
         {
             checkerboardTexture = Content.Load<Texture2D>("ericbomb");
+            //checkerboardTexture.
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,18 +86,24 @@ namespace MonoGame3D
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend; // Need for transparent bits
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            GraphicsDevice.Clear(Color.Red);
 
             DrawGround();
 
             base.Draw(gameTime);
+
         }
 
         void DrawGround()
         {
-
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
+                //this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+
                 pass.Apply();
 
                 graphics.GraphicsDevice.DrawUserPrimitives(
