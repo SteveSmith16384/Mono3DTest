@@ -13,14 +13,18 @@ namespace MonoTest2.Graphics
     {
         private BasicEffect effect;
         private VertexPositionTexture[] verts;
-        private Matrix position, scale;
+        private Vector3 positionVec;
+        private Matrix positionMatrix, scale, rotation;
 
         public Sprite(Game1 game, float x, float y, int w, int h, string texture)
         {
+            positionVec = new Vector3(x, y, 0);
+
             effect = new BasicEffect(game.graphics.GraphicsDevice);
 
-            position = Matrix.CreateTranslation(x, y, 0);
-            scale = Matrix.CreateScale(2);
+            positionMatrix = Matrix.CreateTranslation(x, y, 0);
+            scale = Matrix.CreateScale(1);
+            rotation = Matrix.CreateFromYawPitchRoll(0, 0, 0);
 
             float aspectRatio = game.graphics.PreferredBackBufferWidth / (float)game.graphics.PreferredBackBufferHeight;
             float fieldOfView = MathHelper.PiOver4;
@@ -34,7 +38,6 @@ namespace MonoTest2.Graphics
             var cameraLookAtVector = Vector3.Zero;
             var cameraUpVector = Vector3.UnitY;
             effect.View = Matrix.CreateLookAt(game.cameraPosition, cameraLookAtVector, cameraUpVector);
-
 
             verts = new VertexPositionTexture[6];
 
@@ -52,19 +55,31 @@ namespace MonoTest2.Graphics
             verts[4].TextureCoordinate = new Vector2(1, 1);
             verts[5].TextureCoordinate = verts[2].TextureCoordinate;
 
-            this.MoveTo(x, y, 0);
+            //this.MoveTo(x, y, 0);
         }
 
 
         public void MoveTo(float x, float y, float z)
         {
-            position = Matrix.CreateTranslation(x, y, z);
+            this.positionVec.X = x;
+            this.positionVec.Y = y;
+            this.positionVec.Z = z;
+            positionMatrix = Matrix.CreateTranslation(this.positionVec);
+        }
+
+
+        public void MoveBy(float x, float y, float z)
+        {
+            this.positionVec.X += x;
+            this.positionVec.Y += y;
+            this.positionVec.Z += z;
+            positionMatrix = Matrix.CreateTranslation(this.positionVec);
         }
 
 
         public void Draw(GraphicsDeviceManager graphics)
         {
-            effect.World = this.position * scale;
+            effect.World = this.positionMatrix * scale * rotation;
 
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
