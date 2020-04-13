@@ -11,13 +11,16 @@ namespace MonoTest2.Graphics
 {
     public class Sprite
     {
+        private Game1 game;
         private BasicEffect effect;
         private VertexPositionTexture[] verts;
         private Vector3 positionVec;
         private Matrix positionMatrix, scale, rotation;
 
-        public Sprite(Game1 game, float x, float y, int w, int h, string texture)
+        public Sprite(Game1 _game, float x, float y, int w, int h, string texture)
         {
+            game = _game;
+
             positionVec = new Vector3(x, y, 0);
 
             effect = new BasicEffect(game.graphics.GraphicsDevice);
@@ -48,14 +51,14 @@ namespace MonoTest2.Graphics
             verts[4].Position = new Vector3(w, h, 0);
             verts[5].Position = verts[2].Position;
 
+
+            //---
             verts[0].TextureCoordinate = new Vector2(0, 0);
             verts[1].TextureCoordinate = new Vector2(0, 1);
             verts[2].TextureCoordinate = new Vector2(1, 0);
             verts[3].TextureCoordinate = verts[1].TextureCoordinate;
             verts[4].TextureCoordinate = new Vector2(1, 1);
             verts[5].TextureCoordinate = verts[2].TextureCoordinate;
-
-            //this.MoveTo(x, y, 0);
         }
 
 
@@ -80,7 +83,8 @@ namespace MonoTest2.Graphics
         public void Draw(GraphicsDeviceManager graphics)
         {
             effect.World = this.positionMatrix * scale * rotation;
-
+            //effect.World = Matrix.CreateConstrainedBillboard(this.positionVec, game.cameraPosition, 
+             //   Vector3.Zero, Vector3.UnitY, Vector3.UnitY);
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

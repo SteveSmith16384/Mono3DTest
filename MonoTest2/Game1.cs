@@ -36,8 +36,8 @@ namespace MonoGame3D
         {
             checkerboardTexture = Content.Load<Texture2D>("ericbomb");
 
-            newSprite1 = new Sprite(this, -40, -40, 20, 20, "lunarrover");
-            newSprite2 = new Sprite(this, -60, -20, 20, 80, "junglesign");
+            newSprite1 = new Sprite(this, -40, -40, 20, 20, "junglesign");
+            newSprite2 = new Sprite(this, -60, -20, 40, 40, "lunarrover");
 
             floorVerts = new VertexPositionTexture[6];
 
@@ -85,7 +85,7 @@ namespace MonoGame3D
 
         protected override void Update(GameTime gameTime)
         {
-            this.newSprite2.MoveBy(1, 0, 0);
+            //this.newSprite2.MoveBy(1, 0, 0);
             base.Update(gameTime);
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MonoTest2.Graphics
 {
-    class SpriteSheet
+    public class SpriteSheet
     {
         /*
 Texture2D originalTexture = Content.Load<Texture2D>("ericbomb");
