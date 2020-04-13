@@ -19,7 +19,7 @@ namespace MonoGame3D
 
         Texture2D checkerboardTexture;
 
-        Sprite newSprite;
+        Sprite newSprite1;
         Sprite newSprite2;
 
         public Vector3 cameraPosition = new Vector3(0, 0, 100);
@@ -36,7 +36,8 @@ namespace MonoGame3D
         {
             checkerboardTexture = Content.Load<Texture2D>("ericbomb");
 
-            newSprite = new Sprite(this, -40, -40, 20, 20, "lunarrover");
+            newSprite1 = new Sprite(this, -40, -40, 20, 20, "lunarrover");
+            newSprite2 = new Sprite(this, -20, -20, 20, 80, "junglesign");
 
             floorVerts = new VertexPositionTexture[6];
 
@@ -94,13 +95,14 @@ namespace MonoGame3D
 
             GraphicsDevice.Clear(Color.Red);
 
-            foreach (var pass in effect.CurrentTechnique.Passes)
+            /*foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, floorVerts, 0, 2);
-            }
+            }*/
 
-            this.newSprite.Draw(graphics);
+            //this.newSprite1.Draw(graphics);
+            this.newSprite2.Draw(graphics);
 
             base.Draw(gameTime);
         }

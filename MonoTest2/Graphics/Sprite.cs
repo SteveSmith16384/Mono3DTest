@@ -13,10 +13,14 @@ namespace MonoTest2.Graphics
     {
         private BasicEffect effect;
         private VertexPositionTexture[] verts;
+        private Matrix position, scale;
 
-        public Sprite(Game1 game, int x, int y, int w, int h, string texture)
+        public Sprite(Game1 game, float x, float y, int w, int h, string texture)
         {
             effect = new BasicEffect(game.graphics.GraphicsDevice);
+
+            position = Matrix.CreateTranslation(x, y, 0);
+            scale = Matrix.CreateScale(2);
 
             float aspectRatio = game.graphics.PreferredBackBufferWidth / (float)game.graphics.PreferredBackBufferHeight;
             float fieldOfView = MathHelper.PiOver4;
@@ -38,7 +42,7 @@ namespace MonoTest2.Graphics
             verts[1].Position = new Vector3(0, h, 0);
             verts[2].Position = new Vector3(w, 0, 0);
             verts[3].Position = verts[1].Position;
-            verts[4].Position = new Vector3(h, w, 0);
+            verts[4].Position = new Vector3(w, h, 0);
             verts[5].Position = verts[2].Position;
 
             verts[0].TextureCoordinate = new Vector2(0, 0);
@@ -48,10 +52,20 @@ namespace MonoTest2.Graphics
             verts[4].TextureCoordinate = new Vector2(1, 1);
             verts[5].TextureCoordinate = verts[2].TextureCoordinate;
 
+            this.MoveTo(x, y, 0);
         }
+
+
+        public void MoveTo(float x, float y, float z)
+        {
+            position = Matrix.CreateTranslation(x, y, z);
+        }
+
 
         public void Draw(GraphicsDeviceManager graphics)
         {
+            effect.World = this.position * scale;
+
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
