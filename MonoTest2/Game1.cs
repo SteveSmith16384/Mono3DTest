@@ -20,8 +20,9 @@ namespace MonoGame3D
         Texture2D checkerboardTexture;
 
         Sprite newSprite;
+        Sprite newSprite2;
 
-        Vector3 cameraPosition = new Vector3(0, 0, 100);
+        public Vector3 cameraPosition = new Vector3(0, 0, 100);
 
         public Game1()
         {
@@ -63,17 +64,13 @@ namespace MonoGame3D
             float fieldOfView = MathHelper.PiOver4;
             float nearClipPlane = 1;
             float farClipPlane = 200;
-
             effect.Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
 
             effect.TextureEnabled = true;
             effect.Texture = checkerboardTexture;
 
-            // The assignment of effect.View and effect.Projection
-            // are nearly identical to the code in the Model drawing code.
             var cameraLookAtVector = Vector3.Zero;
             var cameraUpVector = Vector3.UnitY;
-
             effect.View = Matrix.CreateLookAt(cameraPosition, cameraLookAtVector, cameraUpVector);
 
             base.Initialize();
@@ -99,16 +96,13 @@ namespace MonoGame3D
 
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
-                this.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-
                 pass.Apply();
-
                 graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, floorVerts, 0, 2);
-
-                this.newSprite.Draw(graphics);
-
-                base.Draw(gameTime);
             }
+
+            this.newSprite.Draw(graphics);
+
+            base.Draw(gameTime);
         }
 
     }

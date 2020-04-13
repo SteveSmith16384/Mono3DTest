@@ -13,11 +13,24 @@ namespace MonoTest2.Graphics
     {
         private BasicEffect effect;
         private VertexPositionTexture[] verts;
-        private Texture2D texture;
 
         public Sprite(Game1 game, int x, int y, int w, int h, string texture)
         {
             effect = new BasicEffect(game.graphics.GraphicsDevice);
+
+            float aspectRatio = game.graphics.PreferredBackBufferWidth / (float)game.graphics.PreferredBackBufferHeight;
+            float fieldOfView = MathHelper.PiOver4;
+            float nearClipPlane = 1;
+            float farClipPlane = 200;
+            effect.Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
+
+            effect.TextureEnabled = true;
+            effect.Texture = game.Content.Load<Texture2D>(texture);
+
+            var cameraLookAtVector = Vector3.Zero;
+            var cameraUpVector = Vector3.UnitY;
+            effect.View = Matrix.CreateLookAt(game.cameraPosition, cameraLookAtVector, cameraUpVector);
+
 
             verts = new VertexPositionTexture[6];
 
@@ -35,12 +48,16 @@ namespace MonoTest2.Graphics
             verts[4].TextureCoordinate = new Vector2(1, 1);
             verts[5].TextureCoordinate = verts[2].TextureCoordinate;
 
-            this.texture = game.Content.Load<Texture2D>(texture);
         }
 
         public void Draw(GraphicsDeviceManager graphics)
         {
-            graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, verts, 0, 2);
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, verts, 0, 2);
+            }
 
         }
     }
