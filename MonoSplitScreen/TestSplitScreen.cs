@@ -14,6 +14,17 @@ namespace Test3D
         private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0.001f, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
         private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
 
+        private Matrix topView = Matrix.CreateLookAt(new Vector3(0, 0, 4), new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
+        private Matrix frontView = Matrix.CreateLookAt(new Vector3(0, 4, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
+        private Matrix sideView = Matrix.CreateLookAt(new Vector3(4, 0, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
+        private Matrix perspectiveView = Matrix.CreateLookAt(new Vector3(4, 4, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
+
+        private Viewport topViewport;
+        private Viewport sideViewport;
+        private Viewport frontViewport;
+        private Viewport perspectiveViewport;
+
+
         public TestSplitScreen()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -23,6 +34,39 @@ namespace Test3D
         protected override void Initialize()
         {
             base.Initialize();
+
+            topViewport = new Viewport();
+            topViewport.X = 0;
+            topViewport.Y = 0;
+            topViewport.Width = 400;
+            topViewport.Height = 240;
+            topViewport.MinDepth = 0;
+            topViewport.MaxDepth = 1;
+
+            sideViewport = new Viewport();
+            sideViewport.X = 400;
+            sideViewport.Y = 0;
+            sideViewport.Width = 400;
+            sideViewport.Height = 240;
+            sideViewport.MinDepth = 0;
+            sideViewport.MaxDepth = 1;
+
+            frontViewport = new Viewport();
+            frontViewport.X = 0;
+            frontViewport.Y = 240;
+            frontViewport.Width = 400;
+            frontViewport.Height = 240;
+            frontViewport.MinDepth = 0;
+            frontViewport.MaxDepth = 1;
+
+            perspectiveViewport = new Viewport();
+            perspectiveViewport.X = 400;
+            perspectiveViewport.Y = 240;
+            perspectiveViewport.Width = 400;
+            perspectiveViewport.Height = 240;
+            perspectiveViewport.MinDepth = 0;
+            perspectiveViewport.MaxDepth = 1;
+
         }
 
         protected override void LoadContent()
@@ -52,10 +96,27 @@ namespace Test3D
         {
             GraphicsDevice.Clear(Color.Black);
 
-            DrawModel(model, world, view, projection);
+            //DrawModel(model, world, view, projection);
 
+            Viewport original = graphics.GraphicsDevice.Viewport;
+
+            graphics.GraphicsDevice.Viewport = topViewport;
+            DrawModel(model, world, topView, projection);
+
+            graphics.GraphicsDevice.Viewport = sideViewport;
+            DrawModel(model, world, sideView, projection);
+
+            graphics.GraphicsDevice.Viewport = frontViewport;
+            DrawModel(model, world, frontView, projection);
+
+            graphics.GraphicsDevice.Viewport = perspectiveViewport;
+            DrawModel(model, world, perspectiveView, projection);
+
+            GraphicsDevice.Viewport = original;
+            
             base.Draw(gameTime);
         }
+
 
         private void DrawModel(Model model, Matrix world, Matrix view, Matrix projection)
         {
@@ -73,5 +134,8 @@ namespace Test3D
                 mesh.Draw();
             }
         }
+
     }
+
 }
+
