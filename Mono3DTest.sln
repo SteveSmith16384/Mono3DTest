@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1062
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono3DTest", "Mono3DTest\Mono3DTest.csproj", "{745E4878-F055-48E4-8536-16CDD292C3E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTest2", "MonoTest2\MonoTest2.csproj", "{B8DD640E-77E9-41AF-9C25-0EFB30C5CE1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoSplitScreen", "MonoSplitScreen\MonoSplitScreen.csproj", "{44A2603F-6A24-4722-AF26-679331693683}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B8DD640E-77E9-41AF-9C25-0EFB30C5CE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8DD640E-77E9-41AF-9C25-0EFB30C5CE1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8DD640E-77E9-41AF-9C25-0EFB30C5CE1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A2603F-6A24-4722-AF26-679331693683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A2603F-6A24-4722-AF26-679331693683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A2603F-6A24-4722-AF26-679331693683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A2603F-6A24-4722-AF26-679331693683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
