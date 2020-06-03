@@ -9,20 +9,25 @@ namespace Test3D
     public class TestSplitScreen : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        //SpriteBatch spriteBatch;
         private Model model;
         private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0.001f, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
+        //private Matrix view = Matrix.CreateLookAt(new Vector3(0, 0.001f, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
         private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
 
-        private Matrix topView = Matrix.CreateLookAt(new Vector3(0, 0, 4), new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
-        private Matrix frontView = Matrix.CreateLookAt(new Vector3(0, 4, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
-        private Matrix sideView = Matrix.CreateLookAt(new Vector3(4, 0, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
-        private Matrix perspectiveView = Matrix.CreateLookAt(new Vector3(4, 4, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
+        private Vector3 topCam = new Vector3(0, 0, 4);
+        private Vector3 frontCam = new Vector3(0, 4, 0);
+        private Vector3 sideCam = new Vector3(4, 0, 0);
+        private Vector3 perspCam = new Vector3(4, 4, 4);
+
+        private Matrix topView;// = Matrix.CreateLookAt(topCam, new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
+        private Matrix frontView;// = Matrix.CreateLookAt(new Vector3(0, 4, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
+        private Matrix sideView;// = Matrix.CreateLookAt(new Vector3(4, 0, 0), new Vector3(0, 0, 0), Vector3.UnitZ);
+        private Matrix perspectiveView;// = Matrix.CreateLookAt(new Vector3(4, 4, 4), new Vector3(0, 0, 0), Vector3.UnitZ);
 
         private Viewport topViewport;
-        private Viewport sideViewport;
         private Viewport frontViewport;
+        private Viewport sideViewport;
         private Viewport perspectiveViewport;
 
 
@@ -35,6 +40,12 @@ namespace Test3D
         protected override void Initialize()
         {
             base.Initialize();
+
+            topView = Matrix.CreateLookAt(topCam, new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
+            frontView = Matrix.CreateLookAt(frontCam, new Vector3(0, 0, 0), Vector3.UnitZ);
+            sideView = Matrix.CreateLookAt(sideCam, new Vector3(0, 0, 0), Vector3.UnitZ);
+            perspectiveView = Matrix.CreateLookAt(perspCam, new Vector3(0, 0, 0), Vector3.UnitZ);
+
 
             topViewport = new Viewport();
             topViewport.X = 0;
@@ -72,7 +83,7 @@ namespace Test3D
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            //spriteBatch = new SpriteBatch(GraphicsDevice);
 
             model = Content.Load<Model>("SimpleShip/Ship");
         }
@@ -146,7 +157,15 @@ namespace Test3D
             {
                 if (gamePadState.Buttons.X == ButtonState.Pressed)
                 {
-                    Console.WriteLine("Pressed!");
+                    //Console.WriteLine("Pressed!");
+                    topCam.X += 0.2f;
+                    topView = Matrix.CreateLookAt(topCam, new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
+                }
+                if (gamePadState.Buttons.Y == ButtonState.Pressed)
+                {
+                    //Console.WriteLine("Pressed!");
+                    topCam.X -= 0.2f;
+                    topView = Matrix.CreateLookAt(topCam, new Vector3(0, 0, 0), new Vector3(0, 0.001f, 1f));
                 }
             }
 
