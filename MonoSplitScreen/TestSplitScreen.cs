@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Test3D
 {
@@ -89,6 +90,8 @@ namespace Test3D
             angle += 0.01f;
             world = Matrix.CreateRotationZ(angle);
 
+            ReadControllers();
+
             base.Update(gameTime);
         }
 
@@ -135,6 +138,19 @@ namespace Test3D
             }
         }
 
+
+        private void ReadControllers()
+        {
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            if (gamePadState.IsConnected)
+            {
+                if (gamePadState.Buttons.X == ButtonState.Pressed)
+                {
+                    Console.WriteLine("Pressed!");
+                }
+            }
+
+        }
     }
 
 }
